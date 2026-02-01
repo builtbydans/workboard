@@ -1,4 +1,4 @@
-import { formatDateTime } from "../utils/date";
+import { formatDateTime } from "../../utils/date";
 
 const TaskItem = ({ task, onToggle, onDelete, savingId, deletingId }) => {
   const isSaving = savingId === task.id;

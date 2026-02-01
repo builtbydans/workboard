@@ -1,63 +1,36 @@
-import { useState } from "react";
-import useTasks from "./hooks/useTasks";
-import TaskList from "./components/TaskList";
-import AddTaskForm from "./components/AddTaskForm";
+import { Routes, Route, NavLink } from "react-router-dom";
+import Tasks from "./components/Tasks";
+import Dashboard from "./components/Dashboard";
 
-const API_URL = "https://697a6a160e6ff62c3c595a8d.mockapi.io/api/v1/tasks";
+const navLinkClasses = ({ isActive }) =>
+  `px-4 py-2 rounded-md text-sm font-medium transition
+   ${
+     isActive
+       ? "bg-slate-900 text-white"
+       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+   }`;
 
 const App = () => {
-  const {
-    tasks,
-    loading,
-    error,
-    savingId,
-    creating,
-    deletingId,
-    addTask,
-    toggleTask,
-    deleteTask,
-  } = useTasks(API_URL);
-
-  const [newTitle, setNewTitle] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!newTitle.trim()) return;
-    addTask(newTitle);
-    setNewTitle("");
-  };
-
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (a.completed !== b.completed) {
-      return a.completed ? 1 : -1;
-    }
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
-
-  if (loading) return <p className="p-4">Loading…</p>;
-  if (error) return <p className="p-4 text-red-600">{error}</p>;
-
   return (
-    <div className="p-6 space-y-2">
-      <img
-        src="https://e-i-b.com/wp-content/uploads/2023/08/watchhouse-logo.png"
-        width={300}
-        alt="watchHouseLogo"
-        style={{ filter: "brightness(0%)" }}
-      />
-      <AddTaskForm
-        handleSubmit={handleSubmit}
-        text={newTitle}
-        setText={setNewTitle}
-        creatingId={creating}
-      />
-      <TaskList
-        tasks={sortedTasks}
-        toggleTask={toggleTask}
-        deleteTask={deleteTask}
-        deletingId={deletingId}
-        savingId={savingId}
-      />
+    <div className="min-h-screen bg-slate-50 p-6">
+      {/* NAV */}
+      <nav className="flex gap-3 mb-6">
+        <NavLink to="/dashboard" className={navLinkClasses}>
+          Dashboard
+        </NavLink>
+        <NavLink to="/tasks" className={navLinkClasses}>
+          Tasks
+        </NavLink>
+      </nav>
+
+      {/* ROUTES */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="*" element={<Dashboard />} />
+        </Routes>
+      </div>
     </div>
   );
 };
