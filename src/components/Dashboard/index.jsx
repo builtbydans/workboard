@@ -42,6 +42,7 @@ const Dashboard = () => {
       <div className="col-span-12">
         <LineChart data={stats.monthlyData} />
       </div>
+      <p className="col-span-12">To Do: fix page, add charts, styling</p>
     </div>
   );
 };

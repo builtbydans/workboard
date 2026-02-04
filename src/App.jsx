@@ -1,6 +1,7 @@
 import { Routes, Route, NavLink } from "react-router-dom";
 import Tasks from "./components/Tasks";
 import Dashboard from "./components/Dashboard";
+import Onboarding from "./components/Onboarding";
 
 const navLinkClasses = ({ isActive }) =>
   `px-4 py-2 rounded-md text-sm font-medium transition
@@ -21,6 +22,9 @@ const App = () => {
         <NavLink to="/tasks" className={navLinkClasses}>
           Tasks
         </NavLink>
+        <NavLink to="/onboarding" className={navLinkClasses}>
+          Onboarding
+        </NavLink>
       </nav>
 
       {/* ROUTES */}
@@ -28,6 +32,7 @@ const App = () => {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="*" element={<Dashboard />} />
         </Routes>
       </div>
