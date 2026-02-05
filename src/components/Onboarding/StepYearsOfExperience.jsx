@@ -40,24 +40,64 @@ const StepYearsOfExperience = ({
   };
 
   return (
-    <div>
-      <h2>Years of experience</h2>
+    <div className="w-full max-w-md mx-auto mt-24">
+      <div className="bg-white rounded-xl border shadow-sm p-8 space-y-6">
+        {/* Title */}
+        <div className="space-y-2">
+          <h2 className="text-2xl font-semibold text-gray-900">
+            Years of experience
+          </h2>
+          <p className="text-sm text-gray-500">
+            Based on your role:{" "}
+            <span className="font-medium capitalize text-gray-700">{role}</span>
+          </p>
+        </div>
 
-      <p>Role selected: {role}</p>
+        {/* Input */}
+        <div className="space-y-2">
+          <input
+            type="number"
+            min={0}
+            max={role === "student" ? 0 : undefined}
+            value={yearsExperience ?? ""}
+            onChange={(e) => {
+              const value = e.target.value;
+              updateData(
+                "yearsExperience",
+                value === "" ? null : Number(value),
+              );
+              setError("");
+            }}
+            className={`w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
+              error
+                ? "border-red-500 focus:ring-red-200"
+                : "border-gray-300 focus:ring-blue-200"
+            }`}
+          />
 
-      <input
-        type="number"
-        value={yearsExperience ?? ""}
-        min={0}
-        max={role === "student" ? 0 : undefined}
-        onChange={(e) => updateData("yearsExperience", Number(e.target.value))}
-      />
+          {error && <p className="text-sm text-red-600">{error}</p>}
+        </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {/* Navigation */}
+        <div className="flex items-center justify-between pt-4">
+          {back ? (
+            <button
+              onClick={back}
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              ← Back
+            </button>
+          ) : (
+            <div />
+          )}
 
-      <div>
-        {back && <button onClick={back}>Back</button>}
-        <button onClick={handleNext}>Continue</button>
+          <button
+            onClick={handleNext}
+            className="rounded-md bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+          >
+            Continue
+          </button>
+        </div>
       </div>
     </div>
   );
